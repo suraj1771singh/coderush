@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Call Example</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <form id="dataForm">
+      <div>
+        <div>
+          <label for="date">Select a date:</label>
+          <input type="date" id="date" name="date" />
+        </div>
+        <div>
+          <label for="sleephours">Sleep:</label>
+          <input type="number" id="sleephours" name="sleephours" />
+        </div>
+        <div>
+          <label for="stress">Stress:</label>
+          <select id="stress" name="stress">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <div>
+          <label for="symtoms">Symptoms:</label>
+          <select id="symtoms" name="symtoms">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <div>
+          <label for="mood">Mood:</label>
+          <select id="mood" name="mood">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <div>
+          <label for="engagement">Engagement:</label>
+          <select id="engagement" name="engagement">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <div>
+          <label for="drug">Drug Name:</label>
+          <input type="text" id="drug" name="drug" />
+        </div>
+        <div>
+          <label for="note">Note:</label>
+          <input type="text" id="note" name="note" />
+        </div>
+        <button type="submit">Send</button>
+      </div>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      document.getElementById("dataForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formElements = e.target.elements;
+
+        // Convert form data to a JSON object
+        const data = {};
+        for (let i = 0; i < formElements.length; i++) {
+          const element = formElements[i];
+          if (element.name) {
+            data[element.name] = element.value;
+          }
+        }
+
+        try {
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+
+          const res = await axios.post("http://localhost:7000/save-data", JSON.stringify(data), config);
+
+          if (res.status === 200) {
+            console.log("API call successful");
+            // Optionally, do something on success
+          } else {
+            console.log("API call failed with status:", res.status);
+            // Optionally, handle the failure case
+          }
+        } catch (err) {
+          console.log(err);
+          // Optionally, handle the error case
+        }
+      });
+    </script>
+  </body>
+</html>
